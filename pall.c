@@ -1,22 +1,20 @@
 #include "monty.h"
 
 /**
- *
- *
- *
+ *pall - prints all the elements of a doubly linked list.
+ *@h: head of the list
  */
 
 void pall(stack_t **head, unsigned int lNum)
 {
-	stack_t *crnt;
+    stack_t *current = *head;
 	(void)lNum;
 
-	crnt = *head;
-	if (!crnt)
-		return;
-	while(crnt)
-	{
-		printf("%d\n", crnt->n);
-		crnt = crnt->next;
-	}
+    if (!current)
+        return ;
+    while (current)
+    {
+        printf("%d\n", current->n);
+        current = current->next;
+    }
 }

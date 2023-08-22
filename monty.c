@@ -49,24 +49,21 @@ void handleOpcode(char *str)
 int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 {
 	unsigned int i = 0;
-	char *op;
 	instruction_t opstruct[] = {
 		{"push", push},
 		{"pall", pall}
 	};
 
-	op = strtok(opcode, " ");
-	infos.arg = strtok(NULL, " \n");
 	while (opstruct[i].opcode)
 	{
-		if (strcmp(op, opstruct[i].opcode) == 0)
+		if (strcmp(opcode, opstruct[i].opcode) == 0)
 		{
 			opstruct[i].f(stack, lNum);
 			return (0);
 		}
 		i++;
 	}
-	fprintf(stderr, "L%d: unknown instruction %s\n", lNum, op);
+	fprintf(stderr, "L%d: unknown instruction %s\n", lNum, opcode);
 	return (1);
 }
 
@@ -80,15 +77,15 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 int main(int ac, char *av[])
 {
 	FILE *file;
-	char line[MONTY_LEN], opcode[MONTY_LEN];
+	char line[MONTY_LEN], *opcode;
 	stack_t *stack = NULL;
 	int n;
-
 	if (ac != 2)
 	{
 		fprintf(stderr, "USAGE: %s file\n", av[0]);
 		exit(EXIT_FAILURE);
 	}
+    
 	file = fopen(av[1], "r");
 	infos.file = file;
 	if (!file)
@@ -99,14 +96,16 @@ int main(int ac, char *av[])
 	while (fgets(line, sizeof(line), file))
 	{
 		infos.lNum++;
-		sscanf(line, "%s", opcode);
-		if (opcode[0] == '#' || opcode[0] == '\n')
+		if (line[0] == '#' || line[0] == '\n')
 			continue;
-		handleOpcode(opcode);
+        handleOpcode(line);
+        opcode = strtok(line, " \n");
+        infos.arg = strtok(NULL, "\n");
 		n = instruction(opcode, &stack, infos.lNum);
 		if (n == 1)
 		{
 			free_stack(stack);
+            free(opcode);
 			fclose(file);
 			exit(EXIT_FAILURE);
 		}
