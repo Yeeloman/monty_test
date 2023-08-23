@@ -3,57 +3,77 @@
 info_t infos = {NULL, NULL, 0, 0};
 
 /**
- *handleOpcode - fix the string
- *@str: the string to be checked
+ * trimLeadingSpaces - Remove leading spaces from a string
+ * @str: The string to be trimmed
  */
-
-void handleOpcode(char *str)
+void trimLeadingSpaces(char *str)
 {
-	int i, j;
-	int spaceFound = 0;
-	int leadingSpaces = 0;
-	char *newStr;
+    int i, j;
+    int leadingSpaces = 0;
 
-	if (str == NULL)
-	{
-		printf("Input string is NULL.\n");
-		return;
-	}
-	for (i = 0; str[i] != '\0'; i++) {
-		if (str[i] != ' ')
-		break;
-		leadingSpaces++;
-	}
-	newStr = (char *)malloc(strlen(str) + 1);
-	if (newStr == NULL)
-	{
-		printf("Memory allocation failed.\n");
-		return;
-	}
-	for (i = leadingSpaces, j = 0; str[i] != '\0'; i++)
-	{
-		if (str[i] == ' ')
-		{
-			if (!spaceFound)
-			{
-				newStr[j++] = ' ';
-				spaceFound = 1;
-			}
-		}
-		else
-		{
-			newStr[j++] = str[i];
-			spaceFound = 0;
-		}
-	}
-	if (j > leadingSpaces)
-	{
-		while (j > leadingSpaces && newStr[j - 1] == ' ')
-		j--;
-	}
-	newStr[j] = '\0';
-	strcpy(str, newStr);
-	free(newStr);
+    if (str == NULL)
+    {
+        printf("Input string is NULL.\n");
+        return;
+    }
+
+    for (i = 0; str[i] != '\0'; i++)
+    {
+        if (str[i] != ' ')
+            break;
+        leadingSpaces++;
+    }
+
+    for (i = leadingSpaces, j = 0; str[i] != '\0'; i++, j++)
+    {
+        str[j] = str[i];
+    }
+    str[j] = '\0';
+}
+
+/**
+ * condenseSpaces - Condense consecutive spaces in a string
+ * @str: The string to be condensed
+ */
+void condenseSpaces(char *str)
+{
+    int i, j;
+    int spaceFound = 0;
+    char *newStr;
+
+    if (str == NULL)
+    {
+        printf("Input string is NULL.\n");
+        return;
+    }
+
+    newStr = (char *)malloc(strlen(str) + 1);
+    if (newStr == NULL)
+    {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+
+    for (i = 0, j = 0; str[i] != '\0'; i++)
+    {
+        if (str[i] == ' ')
+        {
+            if (!spaceFound)
+            {
+                newStr[j++] = ' ';
+                spaceFound = 1;
+            }
+        }
+        else
+        {
+            newStr[j++] = str[i];
+            spaceFound = 0;
+        }
+    }
+
+    newStr[j] = '\0';
+    strcpy(str, newStr);
+    free(newStr);
 }
 
 /**
@@ -124,7 +144,8 @@ int main(int ac, char *av[])
 		infos.lNum++;
 		if (line[0] == '#' || line[0] == '\n')
 		continue;
-		handleOpcode(line);
+		trimLeadingSpaces(line);
+		condenseSpaces(line);
 		opcode = strtok(line, " \n");
 		infos.arg = strtok(NULL, " \n");
 		n = instruction(opcode, &stack, infos.lNum);

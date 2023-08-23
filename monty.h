@@ -61,7 +61,8 @@ extern info_t infos;
 /*monty.c*/
 int main(int ac, char *av[]);
 int instruction(char *opcode, stack_t **stack, unsigned int lNum);
-void handleOpcode(char *str);
+void trimLeadingSpaces(char *str);
+void condenseSpaces(char *str);
 /*push.c*/
 void push(stack_t **head, unsigned int lNum);
 /*pall.c*/
