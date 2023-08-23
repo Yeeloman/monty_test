@@ -77,5 +77,9 @@ void pint(stack_t **head, unsigned int lNum);
 void pop(stack_t **head, unsigned int lNum);
 /*swap.c*/
 void swap(stack_t **head, unsigned int lNum);
+/*math.c*/
+void add(stack_t **head, unsigned int lNum);
+/*nop*/
+void nop(stack_t **head, unsigned int lNum);
 
 #endif
