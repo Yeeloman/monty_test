@@ -8,27 +8,27 @@ info_t infos = {NULL, NULL, 0, 0};
  */
 void trimLeadingSpaces(char *str)
 {
-    int i, j;
-    int leadingSpaces = 0;
+	int i, j;
+	int leadingSpaces = 0;
 
-    if (str == NULL)
-    {
-        printf("Input string is NULL.\n");
-        return;
-    }
+	if (str == NULL)
+	{
+		printf("Input string is NULL.\n");
+		return;
+	}
 
-    for (i = 0; str[i] != '\0'; i++)
-    {
-        if (str[i] != ' ')
-            break;
-        leadingSpaces++;
-    }
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] != ' ')
+			break;
+		leadingSpaces++;
+	}
 
-    for (i = leadingSpaces, j = 0; str[i] != '\0'; i++, j++)
-    {
-        str[j] = str[i];
-    }
-    str[j] = '\0';
+	for (i = leadingSpaces, j = 0; str[i] != '\0'; i++, j++)
+	{
+		str[j] = str[i];
+	}
+	str[j] = '\0';
 }
 
 /**
@@ -37,43 +37,43 @@ void trimLeadingSpaces(char *str)
  */
 void condenseSpaces(char *str)
 {
-    int i, j;
-    int spaceFound = 0;
-    char *newStr;
+	int i, j;
+	int spaceFound = 0;
+	char *newStr;
 
-    if (str == NULL)
-    {
-        printf("Input string is NULL.\n");
-        return;
-    }
+	if (str == NULL)
+	{
+		printf("Input string is NULL.\n");
+		return;
+	}
 
-    newStr = (char *)malloc(strlen(str) + 1);
-    if (newStr == NULL)
-    {
-        printf("Memory allocation failed.\n");
-        return;
-    }
+	newStr = (char *)malloc(strlen(str) + 1);
+	if (newStr == NULL)
+	{
+		printf("Memory allocation failed.\n");
+		return;
+	}
 
-    for (i = 0, j = 0; str[i] != '\0'; i++)
-    {
-        if (str[i] == ' ')
-        {
-            if (!spaceFound)
-            {
-                newStr[j++] = ' ';
-                spaceFound = 1;
-            }
-        }
-        else
-        {
-            newStr[j++] = str[i];
-            spaceFound = 0;
-        }
-    }
+	for (i = 0, j = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] == ' ')
+		{
+			if (!spaceFound)
+			{
+				newStr[j++] = ' ';
+				spaceFound = 1;
+			}
+		}
+		else
+		{
+			newStr[j++] = str[i];
+			spaceFound = 0;
+		}
+	}
 
-    newStr[j] = '\0';
-    strcpy(str, newStr);
-    free(newStr);
+	newStr[j] = '\0';
+	strcpy(str, newStr);
+	free(newStr);
 }
 
 /**

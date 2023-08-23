@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- *stack - sets the format of the data to a stack
+ *fstack - sets the format of the data to a stack
  *@head: head of the list
  *@lNum: line number
  */
