@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- *pop - prints all the elements of a doubly linked list.
+ *pop - remove last on  the stack
  *@head: head of the list
  *@lNum: line number
  */

@@ -75,5 +75,7 @@ void add_node_end(stack_t **head, const int n);
 void pint(stack_t **head, unsigned int lNum);
 /*pop.c*/
 void pop(stack_t **head, unsigned int lNum);
+/*swap.c*/
+void swap(stack_t **head, unsigned int lNum);
 
 #endif
