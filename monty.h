@@ -79,6 +79,10 @@ void pop(stack_t **head, unsigned int lNum);
 void swap(stack_t **head, unsigned int lNum);
 /*math.c*/
 void add(stack_t **head, unsigned int lNum);
+void sub(stack_t **head, unsigned int lNum);
+void mul(stack_t **head, unsigned int lNum);
+void divi(stack_t **head, unsigned int lNum);
+void mod(stack_t **head, unsigned int lNum);
 /*nop*/
 void nop(stack_t **head, unsigned int lNum);
 

@@ -75,6 +75,10 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 		{"swap", swap},
 		{"add", add},
 		{"nop", nop},
+		{"sub", sub},
+		{"mul", mul},
+		{"div", divi},
+		{"mod", mod},
 		{NULL, NULL}
 	};
 
