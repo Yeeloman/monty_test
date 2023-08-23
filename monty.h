@@ -85,5 +85,14 @@ void divi(stack_t **head, unsigned int lNum);
 void mod(stack_t **head, unsigned int lNum);
 /*nop*/
 void nop(stack_t **head, unsigned int lNum);
-
+/*pchar.c*/
+void pchar(stack_t **head, unsigned int lNum);
+/*pstr.c*/
+void pstr(stack_t **head, unsigned int lNum);
+/*rot.c*/
+void rotl(stack_t **head, unsigned int lNum);
+void rotr(stack_t **head, unsigned int lNum);
+/*stack_queue.c*/
+void queue(stack_t **head, unsigned int lNum);
+void fstack(stack_t **head, unsigned int lNum);
 #endif

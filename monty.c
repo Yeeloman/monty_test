@@ -68,18 +68,15 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 {
 	unsigned int i = 0;
 	instruction_t opstruct[] = {
-		{"push", push},
-		{"pall", pall},
-		{"pint", pint},
-		{"pop", pop},
-		{"swap", swap},
-		{"add", add},
-		{"nop", nop},
-		{"sub", sub},
-		{"mul", mul},
-		{"div", divi},
-		{"mod", mod},
-		{NULL, NULL}
+		{"push", push}, {"pall", pall},
+		{"pint", pint}, {"pop", pop},
+		{"swap", swap}, {"add", add},
+		{"nop", nop}, {"sub", sub},
+		{"mul", mul}, {"div", divi},
+		{"mod", mod}, {"pchar", pchar},
+		{"pstr", pstr}, {"rotl", rotl},
+		{"rotr", rotr}, {"queue", queue},
+		{"stack", fstack}, {NULL, NULL}
 	};
 
 	while (opstruct[i].opcode)
