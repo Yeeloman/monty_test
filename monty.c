@@ -71,6 +71,7 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 		{"push", push},
 		{"pall", pall},
 		{"pint", pint},
+		{"pop", pop},
 		{NULL, NULL}
 	};
 

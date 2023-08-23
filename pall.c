@@ -2,7 +2,8 @@
 
 /**
  *pall - prints all the elements of a doubly linked list.
- *@h: head of the list
+ *@head: head of the list
+ *@lNum: line number
  */
 
 void pall(stack_t **head, unsigned int lNum)
