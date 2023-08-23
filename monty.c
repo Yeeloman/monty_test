@@ -12,12 +12,23 @@ void handleOpcode(char *str)
 	int i, j;
 	int spaceFound = 0;
 	int leadingSpaces = 0;
+	char *newStr;
 
-	for (i = 0; str[i] != '\0'; i++)
+	if (str == NULL)
 	{
+		printf("Input string is NULL.\n");
+		return;
+	}
+	for (i = 0; str[i] != '\0'; i++) {
 		if (str[i] != ' ')
-		break;
+			break;
 		leadingSpaces++;
+	}
+	newStr = (char *)malloc(strlen(str) + 1);
+	if (newStr == NULL)
+	{
+		printf("Memory allocation failed.\n");
+		return;
 	}
 	for (i = leadingSpaces, j = 0; str[i] != '\0'; i++)
 	{
@@ -25,19 +36,24 @@ void handleOpcode(char *str)
 		{
 			if (!spaceFound)
 			{
-				str[j++] = ' ';
+				newStr[j++] = ' ';
 				spaceFound = 1;
 			}
 		}
 		else
 		{
-			str[j++] = str[i];
+			newStr[j++] = str[i];
 			spaceFound = 0;
 		}
 	}
-	while (j > leadingSpaces && str[j - 1] == ' ')
-		j--;
-	str[j] = '\0';
+	if (j > leadingSpaces)
+	{
+		while (j > leadingSpaces && newStr[j - 1] == ' ')
+			j--;
+	}
+	newStr[j] = '\0';
+	strcpy(str, newStr);
+	free(newStr);
 }
 
 /**
@@ -53,7 +69,8 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 	unsigned int i = 0;
 	instruction_t opstruct[] = {
 		{"push", push},
-		{"pall", pall}
+		{"pall", pall},
+		{NULL, NULL}
 	};
 
 	while (opstruct[i].opcode)
@@ -61,7 +78,7 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 		if (strcmp(opcode, opstruct[i].opcode) == 0)
 		{
 			opstruct[i].f(stack, lNum);
-			return (0);
+		return (0);
 		}
 		i++;
 	}
@@ -103,12 +120,12 @@ int main(int ac, char *av[])
 			continue;
 		handleOpcode(line);
 		opcode = strtok(line, " \n");
-		infos.arg = strtok(NULL, "\n");
+		infos.arg = strtok(NULL, " \n");
 		n = instruction(opcode, &stack, infos.lNum);
 		if (n == 1)
 		{
 			free_stack(stack);
-			free(opcode);
+			/*free(opcode);*/
 			fclose(file);
 			exit(EXIT_FAILURE);
 		}

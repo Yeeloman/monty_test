@@ -21,7 +21,7 @@ void add_node(stack_t **head, const int n)
 	temp->prev = NULL;
 	temp->next = *head;
 	if (*head)
-		(*head)->prev = temp;
+	(*head)->prev = temp;
 	*head = temp;
 }
 

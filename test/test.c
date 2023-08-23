@@ -81,6 +81,54 @@ void handleOpcode(char *str)
 	int i, j;
 	int spaceFound = 0;
 	int leadingSpaces = 0;
+	char *newStr;
+
+	if (str == NULL)
+	{
+		printf("Input string is NULL.\n");
+		return;
+	}
+	for (i = 0; str[i] != '\0'; i++) {
+		if (str[i] != ' ')
+			break;
+		leadingSpaces++;
+	}
+	newStr = (char *)malloc(strlen(str) + 1);
+	if (newStr == NULL)
+	{
+		printf("Memory allocation failed.\n");
+		return;
+	}
+	for (i = leadingSpaces, j = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] == ' ')
+		{
+			if (!spaceFound)
+			{
+				newStr[j++] = ' ';
+				spaceFound = 1;
+			}
+		}
+		else
+		{
+			newStr[j++] = str[i];
+			spaceFound = 0;
+		}
+	}
+	if (j > leadingSpaces)
+	{
+		while (j > leadingSpaces && newStr[j - 1] == ' ')
+			j--;
+	}
+	newStr[j] = '\0';
+	strcpy(str, newStr);
+	free(newStr);
+}
+/*void handleOpcode(char *str)
+{
+	int i, j;
+	int spaceFound = 0;
+	int leadingSpaces = 0;
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
@@ -107,7 +155,7 @@ void handleOpcode(char *str)
 	while (j > leadingSpaces && str[j - 1] == ' ')
 		j--;
 	str[j] = '\0';
-}
+}*/
 
 /**
  *
@@ -120,7 +168,8 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 	unsigned int i = 0;
 	instruction_t opstruct[] = {
 		{"push", push},
-		{"pall", pall}
+		{"pall", pall},
+        {NULL, NULL}
 	};
 
 	while (opstruct[i].opcode)
@@ -170,11 +219,12 @@ int main(int ac, char *av[])
 			continue;
         handleOpcode(line);
         opcode = strtok(line, " \n");
-        infos.arg = strtok(NULL, "\n");
+        infos.arg = strtok(NULL, " \n");
 		n = instruction(opcode, &stack, infos.lNum);
 		if (n == 1)
 		{
 			free_stack(stack);
+            //free(opcode);
 			fclose(file);
 			exit(EXIT_FAILURE);
 		}
@@ -279,12 +329,56 @@ void pall(stack_t **head, unsigned int lNum)
     }
 }
 
+/**
+ *
+ *
+ *
+ */
+
+int is_digit(char c)
+{
+    return (c >= '0' && c <= '9');
+}
+
+/**
+ *
+ *
+ *
+ */
+
+int is_valid_number(const char *str)
+{
+    if (*str == '-' || *str == '+')
+        str++;
+
+    while (*str)
+    {
+        if (!is_digit(*str))
+            return (0);
+        str++;
+    }
+    return (1);
+}
+
+/**
+ *
+ *
+ *
+ */
 
 void push(stack_t **head, unsigned int lNum)
 {
 	long int int_val;
 	char *endptr;
 
+	if (infos.arg == NULL || is_valid_number(infos.arg) == 0)
+    {
+        fprintf(stderr, "L%d: usage: push integer\n", lNum);
+        fclose(infos.file);
+        free_stack(*head);
+        exit(EXIT_FAILURE);
+    }
+    
 	int_val = strtol(infos.arg, &endptr, 10);
 	if (errno != 0 && *endptr != '\0')
 	{
@@ -298,4 +392,3 @@ void push(stack_t **head, unsigned int lNum)
 	else
 		add_node_end(head, int_val);
 }
-
