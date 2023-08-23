@@ -21,7 +21,7 @@ void handleOpcode(char *str)
 	}
 	for (i = 0; str[i] != '\0'; i++) {
 		if (str[i] != ' ')
-			break;
+		break;
 		leadingSpaces++;
 	}
 	newStr = (char *)malloc(strlen(str) + 1);
@@ -49,7 +49,7 @@ void handleOpcode(char *str)
 	if (j > leadingSpaces)
 	{
 		while (j > leadingSpaces && newStr[j - 1] == ' ')
-			j--;
+		j--;
 	}
 	newStr[j] = '\0';
 	strcpy(str, newStr);
@@ -70,6 +70,7 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 	instruction_t opstruct[] = {
 		{"push", push},
 		{"pall", pall},
+		{"pint", pint},
 		{NULL, NULL}
 	};
 
@@ -78,7 +79,7 @@ int instruction(char *opcode, stack_t **stack, unsigned int lNum)
 		if (strcmp(opcode, opstruct[i].opcode) == 0)
 		{
 			opstruct[i].f(stack, lNum);
-		return (0);
+			return (0);
 		}
 		i++;
 	}
@@ -117,7 +118,7 @@ int main(int ac, char *av[])
 	{
 		infos.lNum++;
 		if (line[0] == '#' || line[0] == '\n')
-			continue;
+		continue;
 		handleOpcode(line);
 		opcode = strtok(line, " \n");
 		infos.arg = strtok(NULL, " \n");

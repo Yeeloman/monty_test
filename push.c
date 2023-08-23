@@ -32,9 +32,9 @@ int is_valid_number(const char *str)
 }
 
 /**
- *
- *
- *
+ *push - prints all the elements of a doubly linked list.
+ *@head: head of the list
+ *@lNum: line number
  */
 
 void push(stack_t **head, unsigned int lNum)
